@@ -148,11 +148,13 @@ public class ChangeImg {
 
                         while (
                                 i < width - 1 && i > 0 &&
-                                checkBlack(new Color(bufferedImage.getRGB(i - 1, j))) &&
-                                !(checkBlack(new Color(bufferedImage.getRGB(i + 1, j))))) {
+                                checkBlack(new Color(bufferedImage.getRGB(i, j - 1))) &&
+                                checkWhite(new Color(bufferedImage.getRGB(i, j)))) {
 
                             pixels[i][j] = new Color(5, 5, 245).getRGB();
+                            bufferedImage.setRGB(i,j, new Color(5, 5, 245).getRGB());
                             i++;
+                            System.out.println(i);
                         }
                     }
                 }

@@ -10,10 +10,17 @@ public class Main {
 
         ChangeImg chImg = new ChangeImg("square.jpeg");
 
-        chImg.changeWhiteColor(new Color(145, 127, 51));
-        chImg.changeBlackColor(new Color(18, 187, 121));
+//        chImg.changeWhiteColor(new Color(145, 127, 51));
+//        chImg.changeBlackColor(new Color(18, 187, 121));
+//
+//        File buffFile = new File("changeSquare.jpeg");
+//        ImageIO.write(chImg.getBufferedImage(),"png",buffFile);
+
+
 
         File buffFile = new File("changeSquare.jpeg");
+
+        chImg.blackNearWhite();
         ImageIO.write(chImg.getBufferedImage(),"png",buffFile);
 
 
