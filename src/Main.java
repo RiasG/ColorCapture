@@ -10,8 +10,8 @@ public class Main {
 
         ChangeImg chImg = new ChangeImg("square.jpeg");
 
-        chImg.changeWhiteColor(new Color(28, 215, 28));
-        chImg.changeBlackColor(new Color(6, 56, 245));
+        chImg.changeWhiteColor(new Color(145, 127, 51));
+        chImg.changeBlackColor(new Color(18, 187, 121));
 
         File buffFile = new File("changeSquare.jpeg");
         ImageIO.write(chImg.getBufferedImage(),"png",buffFile);

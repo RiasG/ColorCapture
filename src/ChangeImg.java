@@ -87,15 +87,9 @@ public class ChangeImg {
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
 
-
                 Color bufColor = new Color(bufferedImage.getRGB(i,j));
 
-                if (
-                        bufColor.getRed() <= 255 && bufColor.getRed() >= 200 &&
-                        bufColor.getGreen() <= 255 && bufColor.getGreen() >= 200 &&
-                        bufColor.getBlue() <= 255 && bufColor.getBlue() >= 200
-                )
-                    pixMatrix[i][j] = c.getRGB();
+                if (checkWhite(bufColor)) pixMatrix[i][j] = c.getRGB();
 
                 bufferedImage.setRGB(i, j, pixMatrix[i][j]);
 
@@ -107,14 +101,9 @@ public class ChangeImg {
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
 
-
                 Color bufColor = new Color(bufferedImage.getRGB(i,j));
 
-                if (
-                        bufColor.getRed() <= 30 && bufColor.getRed() >= 0 &&
-                                bufColor.getGreen() <= 30 && bufColor.getGreen() >= 0 &&
-                                bufColor.getBlue() <= 30 && bufColor.getBlue() >= 0
-                )
+                if (checkBlack(bufColor))
                     pixMatrix[i][j] = c.getRGB();
 
                 bufferedImage.setRGB(i, j, pixMatrix[i][j]);
@@ -123,6 +112,54 @@ public class ChangeImg {
         }
     }
 
+    private boolean checkWhite(Color color){
+        if (
+                color.getRed() <= 255 && color.getRed() >= 200 &&
+                        color.getGreen() <= 255 && color.getGreen() >= 200 &&
+                        color.getBlue() <= 255 && color.getBlue() >= 200
+        ) return true;
+
+        return false;
+
+    }
+
+    private boolean checkBlack(Color color){
+        if (
+                color.getRed() <= 30 && color.getRed() >= 0 &&
+                        color.getGreen() <= 30 && color.getGreen() >= 0 &&
+                        color.getBlue() <= 30 && color.getBlue() >= 0
+        ) return true;
+
+        return false;
+    }
+
+    public void blackNearWhite(){
+        int[][] pixels = new int[2][2];
+        for (int j = 0; j < height - 1; j++) {
+            for (int i = 0; i < width - 1; i++) {
+                Color color = new Color(bufferedImage.getRGB(i, j));
+                Color bufColor = new Color(bufferedImage.getRGB(i + 1, j));
+                if (checkBlack(color) && checkWhite(bufColor)){
+                    pixels[0][0] = i + 1;
+                    pixels[0][1] = j;
+                    bufColor = new Color(bufferedImage.getRGB(i + 1, j));
+                    while (checkWhite(bufColor) && (i < width - 1)) {
+                        i++;
+                        bufColor = new Color(bufferedImage.getRGB(i, j));
+                    }
+
+                    if (checkBlack(bufColor)) {
+
+                    }
+                }
+
+
+
+            }
+        }
+
+
+    }
 
     public int getHeight() {
         return height;
