@@ -134,28 +134,31 @@ public class ChangeImg {
     }
 
     public void blackNearWhite(){
-        int[][] pixels = new int[2][2];
+        int[][] pixels = new int[width][height];
         for (int j = 0; j < height - 1; j++) {
             for (int i = 0; i < width - 1; i++) {
                 Color color = new Color(bufferedImage.getRGB(i, j));
-                Color bufColor = new Color(bufferedImage.getRGB(i + 1, j));
-                if (checkBlack(color) && checkWhite(bufColor)){
-                    pixels[0][0] = i + 1;
-                    pixels[0][1] = j;
-                    bufColor = new Color(bufferedImage.getRGB(i + 1, j));
-                    while (checkWhite(bufColor) && (i < width - 1)) {
-                        i++;
-                        bufColor = new Color(bufferedImage.getRGB(i, j));
-                    }
+                if (checkWhite(color)){
+                    if (
+                            j > 0 &&  i > 0 && i < width && j < height &&
+                            checkBlack(new Color(bufferedImage.getRGB(i,j - 1))) &&
+                            checkBlack(new Color(bufferedImage.getRGB(i - 1, j))) &&
+                            checkBlack(new Color(bufferedImage.getRGB(i - 1,j - 1)))){
 
-                    if (checkBlack(bufColor)) {
 
+                        while (
+                                i < width - 1 && i > 0 &&
+                                checkBlack(new Color(bufferedImage.getRGB(i - 1, j))) &&
+                                !(checkBlack(new Color(bufferedImage.getRGB(i + 1, j))))) {
+
+                            pixels[i][j] = new Color(5, 5, 245).getRGB();
+                            i++;
+                        }
                     }
                 }
 
-
-
             }
+
         }
 
 
