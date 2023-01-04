@@ -133,29 +133,69 @@ public class ChangeImg {
         return false;
     }
 
+    private boolean checkPointStart(int i, int j){
+        if (
+                j > 0 &&  i > 0 && i < width && j < height &&
+                        checkBlack(new Color(bufferedImage.getRGB(i,j - 1))) &&
+                        checkBlack(new Color(bufferedImage.getRGB(i - 1, j))) &&
+                        checkBlack(new Color(bufferedImage.getRGB(i - 1,j - 1)))) {
+
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkPointEnd(int i, int j){
+        if (
+                j > 0 &&  i > 0 && i < width && j < height &&
+                        checkBlack(new Color(bufferedImage.getRGB(i + 1,j))) &&
+                        checkBlack(new Color(bufferedImage.getRGB(i, j + 1))) &&
+                        checkBlack(new Color(bufferedImage.getRGB(i + 1,j + 1)))) {
+
+            return true;
+        }
+        return false;
+    }
+
     public void blackNearWhite(){
         int[][] pixels = new int[width][height];
         for (int j = 0; j < height - 1; j++) {
             for (int i = 0; i < width - 1; i++) {
+                int iBuf = i;
+                int jBuf = j;
                 Color color = new Color(bufferedImage.getRGB(i, j));
                 if (checkWhite(color)){
-                    if (
-                            j > 0 &&  i > 0 && i < width && j < height &&
-                            checkBlack(new Color(bufferedImage.getRGB(i,j - 1))) &&
-                            checkBlack(new Color(bufferedImage.getRGB(i - 1, j))) &&
-                            checkBlack(new Color(bufferedImage.getRGB(i - 1,j - 1)))){
+                    if (checkPointStart(i,j)){
+
+                    boolean flag = false;
+                        while(
+                                j > 0 && j < width - 1 &&
+                                        checkBlack(new Color(bufferedImage.getRGB(i - 1, j))) &&
+                                        checkWhite(new Color(bufferedImage.getRGB(i, j)))
+                        ) {
+                            while (
+                                    i < width - 1 && i > 0 &&
+                                    checkWhite(new Color(bufferedImage.getRGB(i, j)))
+                            ) {
+                                if (checkBlack(new Color(bufferedImage.getRGB(i, j - 1)))) {
+                                    pixels[i][j] = new Color(5, 5, 245).getRGB();
+                                    bufferedImage.setRGB(i, j, new Color(48, 248, 3).getRGB());
+                                    i++;
+                                    flag = true;
+                                    System.out.println(i);
+                                } else if (flag == true){
+                                    pixels[i][j] = new Color(5, 5, 245).getRGB();
+                                    bufferedImage.setRGB(i, j, new Color(48, 248, 3).getRGB());
+                                    i++;
+                                    System.out.println(i);
+                                }
+                            }
+                            i = iBuf;
+                            j++;
 
 
-                        while (
-                                i < width - 1 && i > 0 &&
-                                checkBlack(new Color(bufferedImage.getRGB(i, j - 1))) &&
-                                checkWhite(new Color(bufferedImage.getRGB(i, j)))) {
-
-                            pixels[i][j] = new Color(5, 5, 245).getRGB();
-                            bufferedImage.setRGB(i,j, new Color(5, 5, 245).getRGB());
-                            i++;
-                            System.out.println(i);
-                        }
+                       }
+                        j = jBuf;
                     }
                 }
 
