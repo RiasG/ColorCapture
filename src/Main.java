@@ -8,11 +8,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        ChangeImg chImg = new ChangeImg("photo.jpeg");
+        ChangeImg chImg = new ChangeImg("square.jpeg");
 
-        chImg.changeWhiteColor(new Color(44, 238, 1));
+        chImg.changeWhiteColor(new Color(28, 215, 28));
+        chImg.changeBlackColor(new Color(6, 56, 245));
 
-        File buffFile = new File("qqq.jpeg");
+        File buffFile = new File("changeSquare.jpeg");
         ImageIO.write(chImg.getBufferedImage(),"png",buffFile);
 
 

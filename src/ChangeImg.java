@@ -103,6 +103,26 @@ public class ChangeImg {
         }
     }
 
+    public void changeBlackColor (Color c){
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+
+
+                Color bufColor = new Color(bufferedImage.getRGB(i,j));
+
+                if (
+                        bufColor.getRed() <= 30 && bufColor.getRed() >= 0 &&
+                                bufColor.getGreen() <= 30 && bufColor.getGreen() >= 0 &&
+                                bufColor.getBlue() <= 30 && bufColor.getBlue() >= 0
+                )
+                    pixMatrix[i][j] = c.getRGB();
+
+                bufferedImage.setRGB(i, j, pixMatrix[i][j]);
+
+            }
+        }
+    }
+
 
     public int getHeight() {
         return height;
