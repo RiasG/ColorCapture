@@ -165,47 +165,50 @@ public class ChangeImg {
             for (int i = 0; i < width - 1; i++) {
                 int iBuf = i;
                 int jBuf = j;
-                Color color = new Color(bufferedImage.getRGB(i, j));
+                int x = 0;
+                int y = 0;
+                class Coord{
+                    int x = 0;
+                    int y = 0;
 
-                if (checkPointStart(i,j)){
+                }
+                Coord c = new Coord();
+
+                Color color = new Color(bufferedImage.getRGB(iBuf, jBuf));
+
+                if (checkPointStart(iBuf,jBuf)){
 
                     boolean flag = false;
+
+                    while (
+                            jBuf > 0 && jBuf < width - 1
+                            && checkBlack(new Color(bufferedImage.getRGB(iBuf - 1, jBuf)))
+                            && checkWhite(new Color(bufferedImage.getRGB(iBuf, jBuf)))
+                    ) {
                         while (
-                                j > 0 && j < width - 1
-                                && checkBlack(new Color(bufferedImage.getRGB(i - 1, j)))
-                                && checkWhite(new Color(bufferedImage.getRGB(i, j)))
+                                iBuf < width - 1 && iBuf > 0 &&
+                                checkWhite(new Color(bufferedImage.getRGB(iBuf, jBuf)))
                         ) {
-                            while (
-                                    i < width - 1 && i > 0 &&
-                                    checkWhite(new Color(bufferedImage.getRGB(i, j)))
-                            ) {
-                                if (checkBlack(new Color(bufferedImage.getRGB(i, j - 1)))) {
-                                    pixels[i][j] = new Color(5, 5, 245).getRGB();
-                                    bufferedImage.setRGB(i, j, new Color(238, 85, 7).getRGB());
-                                    i++;
-                                    flag = true;
-                                    System.out.println(i);
-                                } else if (flag == true){
-                                    pixels[i][j] = new Color(5, 5, 245).getRGB();
-                                    bufferedImage.setRGB(i, j, new Color(238, 85, 7).getRGB());
-                                    i++;
-                                    System.out.println(i);
-                                }
+                            if (checkBlack(new Color(bufferedImage.getRGB(iBuf, jBuf - 1)))) {
+                                //pixels[iBuf][jBuf] = new Color(5, 5, 245).getRGB();
+                                bufferedImage.setRGB(iBuf, jBuf, new Color(3, 253, 195).getRGB());
+                                iBuf++;
+                                flag = true;
+                                System.out.println(iBuf);
+                            } else if (flag == true){
+                                //pixels[iBuf][jBuf] = new Color(5, 5, 245).getRGB();
+                                bufferedImage.setRGB(iBuf, jBuf, new Color(4, 246, 181).getRGB());
+
+                                iBuf++;
+                                System.out.println(iBuf);
                             }
-                            i = iBuf;
-                            j++;
-
-
-                       }
-                        j = jBuf;
+                        }
+                        iBuf = i;
+                        jBuf++;
                     }
-
-
+                }
             }
-
         }
-
-
     }
 
     public int getHeight() {
