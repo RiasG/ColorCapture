@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
+import java.util.List;
 
 public class ChangeImg {
 
@@ -172,36 +174,42 @@ public class ChangeImg {
                     int y = 0;
 
                 }
-                Coord c = new Coord();
+                List<Coord> coordsList = new LinkedList();
+
+
+
 
                 Color color = new Color(bufferedImage.getRGB(iBuf, jBuf));
 
                 if (checkPointStart(iBuf,jBuf)){
 
                     boolean flag = false;
+                    boolean whiteFlag = true;
 
                     while (
                             jBuf > 0 && jBuf < width - 1
+                            && whiteFlag == true
                             && checkBlack(new Color(bufferedImage.getRGB(iBuf - 1, jBuf)))
                             && checkWhite(new Color(bufferedImage.getRGB(iBuf, jBuf)))
                     ) {
                         while (
-                                iBuf < width - 1 && iBuf > 0 &&
-                                checkWhite(new Color(bufferedImage.getRGB(iBuf, jBuf)))
+                                iBuf < width - 1 && iBuf > 0
+                                && whiteFlag == true
+                                && checkWhite(new Color(bufferedImage.getRGB(iBuf, jBuf)))
                         ) {
                             if (checkBlack(new Color(bufferedImage.getRGB(iBuf, jBuf - 1)))) {
                                 //pixels[iBuf][jBuf] = new Color(5, 5, 245).getRGB();
-                                bufferedImage.setRGB(iBuf, jBuf, new Color(3, 253, 195).getRGB());
+                                bufferedImage.setRGB(iBuf, jBuf, new Color(57, 250, 4).getRGB());
                                 iBuf++;
                                 flag = true;
                                 System.out.println(iBuf);
                             } else if (flag == true){
                                 //pixels[iBuf][jBuf] = new Color(5, 5, 245).getRGB();
-                                bufferedImage.setRGB(iBuf, jBuf, new Color(4, 246, 181).getRGB());
+                                bufferedImage.setRGB(iBuf, jBuf, new Color(57, 250, 4).getRGB());
 
                                 iBuf++;
                                 System.out.println(iBuf);
-                            }
+                            } else iBuf++;
                         }
                         iBuf = i;
                         jBuf++;
